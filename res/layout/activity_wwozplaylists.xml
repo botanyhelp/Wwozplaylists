@@ -1,0 +1,171 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            tools:context=".WwozplaylistsActivity" >
+
+            <TextView
+                android:id="@+id/txt_Songdata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/songdata" />
+
+            <TextView
+                android:id="@+id/txt_Songsearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="90"
+                android:text="@string/songsearch" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="#c0c0c0" />
+
+            <Button
+                android:id="@+id/btn_ShowPager"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClickShowMore"
+                android:text="Next 100"
+                android:textColor="#FF0000"
+                android:visibility="invisible" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="#c0c0c0" />
+
+            <EditText
+                android:id="@+id/txt_title"
+                android:hint="song title snippet,  (saints go march)"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btn_Title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClickTitle"
+                android:text="@string/title" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="#c0c0c0" />
+
+            <EditText
+                android:id="@+id/txt_artist"
+                android:hint="artist snippet (Armstrong)"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btn_Artist"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClickArtist"
+                android:text="@string/artist" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="#c0c0c0" />
+
+            <EditText
+                android:id="@+id/txt_album"
+                android:hint="album snippet (kind of blu)"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btn_Album"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClickAlbum"
+                android:text="@string/album" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="#c0c0c0" />
+
+            <EditText
+                android:id="@+id/txt_artisttitleartist"
+                android:hint="artist snippet (coltrane)"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/txt_artisttitletitle"
+                android:hint="song title snippet,  (blue)"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btn_ArtistTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClickArtistTitle"
+                android:text="@string/artisttitle" />
+            
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="#c0c0c0" />
+            <TextView 
+                android:id="@+id/tv_shows"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tvshows" />
+            <Button
+                android:id="@+id/btn_Show"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClickShow"
+                android:text="@string/show" />
+
+            <Button
+                android:id="@+id/btn_Showtitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClickShowTitle"
+                android:text="@string/showtitle" />
+
+            <Button
+                android:id="@+id/btn_Showartist"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClickShowArtist"
+                android:text="@string/showartist" />
+
+            <Button
+                android:id="@+id/btn_Showalbum"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClickShowAlbum"
+                android:text="@string/showalbum" />
+
+            <Button
+                android:id="@+id/btn_Help"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClickHelp"
+                android:text="@string/help" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
