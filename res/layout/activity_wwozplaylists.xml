@@ -27,7 +27,7 @@
                 android:id="@+id/txt_Songsearch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="90"
+                android:maxLines="130"
                 android:text="@string/songsearch" />
 
             <View
@@ -49,122 +49,246 @@
                 android:layout_height="2dp"
                 android:background="#c0c0c0" />
 
-            <EditText
-                android:id="@+id/txt_title"
-                android:hint="song title snippet,  (saints go march)"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
 
-            <Button
-                android:id="@+id/btn_Title"
+                    <EditText
+                        android:id="@+id/txt_easy"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="miles d, blue"
+                        android:visibility="visible" />
+
+                    <Button
+                        android:id="@+id/btn_Easy"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onClickEasy"
+                        android:text="@string/easy"
+                        android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onClickTitle"
-                android:text="@string/title" />
+                android:text="@string/tvtitle"
+                android:visibility="invisible" />
 
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="2dp"
-                android:background="#c0c0c0" />
 
-            <EditText
-                android:id="@+id/txt_artist"
-                android:hint="artist snippet (Armstrong)"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
+                    <EditText
+                        android:id="@+id/txt_title"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="saints go"
+                        android:visibility="invisible" />
 
-            <Button
-                android:id="@+id/btn_Artist"
+                    <Button
+                        android:id="@+id/btn_Title"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onClickTitle"
+                        android:text="@string/title"
+                        android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/tv_artist"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onClickArtist"
-                android:text="@string/artist" />
+                android:text="@string/tvartist"
+                android:visibility="invisible" />
 
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="2dp"
-                android:background="#c0c0c0" />
 
-            <EditText
-                android:id="@+id/txt_album"
-                android:hint="album snippet (kind of blu)"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
+                    <EditText
+                        android:id="@+id/txt_artist"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="armstrong"
+                        android:visibility="invisible" />
 
-            <Button
-                android:id="@+id/btn_Album"
+                    <Button
+                        android:id="@+id/btn_Artist"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onClickArtist"
+                        android:text="@string/artist"
+                        android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/tv_album"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onClickAlbum"
-                android:text="@string/album" />
+                android:text="@string/tvalbum"
+                android:visibility="invisible" />
 
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="2dp"
-                android:background="#c0c0c0" />
 
-            <EditText
-                android:id="@+id/txt_artisttitleartist"
-                android:hint="artist snippet (coltrane)"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
+                    <EditText
+                        android:id="@+id/txt_album"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="kind of blu"
+                        android:visibility="invisible" />
 
-            <EditText
-                android:id="@+id/txt_artisttitletitle"
-                android:hint="song title snippet,  (blue)"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/btn_ArtistTitle"
+                    <Button
+                        android:id="@+id/btn_Album"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onClickAlbum"
+                        android:text="@string/album"
+                        android:visibility="invisible" />
+            <TextView
+                android:id="@+id/tv_artisttitle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onClickArtistTitle"
-                android:text="@string/artisttitle" />
-            
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="2dp"
-                android:background="#c0c0c0" />
-            <TextView 
+                android:text="@string/tvartisttitle"
+                android:visibility="invisible" />
+
+
+                    <EditText
+                        android:id="@+id/txt_artisttitleartist"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="coltrane"
+                        android:visibility="invisible" />
+
+                    <EditText
+                        android:id="@+id/txt_artisttitletitle"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="blue"
+                        android:visibility="invisible" />
+
+                    <Button
+                        android:id="@+id/btn_ArtistTitle"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onClickArtistTitle"
+                        android:text="@string/artisttitle"
+                        android:visibility="invisible" />
+
+
+            <TextView
                 android:id="@+id/tv_shows"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tvshows" />
-            <Button
-                android:id="@+id/btn_Show"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:onClick="onClickShow"
-                android:text="@string/show" />
+                android:text="@string/tvshows"
+                android:visibility="invisible" />
 
-            <Button
-                android:id="@+id/btn_Showtitle"
+            <TableLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:onClick="onClickShowTitle"
-                android:text="@string/showtitle" />
+                android:layout_height="fill_parent" >
 
-            <Button
-                android:id="@+id/btn_Showartist"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:onClick="onClickShowArtist"
-                android:text="@string/showartist" />
+                <TableRow>
 
-            <Button
-                android:id="@+id/btn_Showalbum"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:onClick="onClickShowAlbum"
-                android:text="@string/showalbum" />
+                    <Button
+                        android:id="@+id/btn_Show"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onClickShow"
+                        android:text="@string/show"
+                        android:visibility="invisible" />
 
-            <Button
-                android:id="@+id/btn_Help"
+                    <Button
+                        android:id="@+id/btn_Showtitle"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onClickShowTitle"
+                        android:text="@string/showtitle"
+                        android:visibility="invisible" />
+                </TableRow>
+            </TableLayout>
+            <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TableRow>            
+                    <Button
+                        android:id="@+id/btn_Showartist"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onClickShowArtist"
+                        android:text="@string/showartist"
+                        android:visibility="invisible" />
+
+                    <Button
+                        android:id="@+id/btn_Showalbum"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onClickShowAlbum"
+                        android:text="@string/showalbum"
+                        android:visibility="invisible" />
+                </TableRow>
+            </TableLayout>
+            <TextView
+                android:id="@+id/tv_top"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onClickHelp"
-                android:text="@string/help" />
+                android:text="@string/tvtop"
+                android:visibility="invisible" />            
+            <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+                <TableRow>                
+                    <Button
+                        android:id="@+id/btn_TopTitle"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onClickTopTitle"
+                        android:text="@string/toptitle" />                
+                    <Button
+                        android:id="@+id/btn_TopArtist"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onClickTopArtist"
+                        android:text="@string/topartist" />  
+                    <Button
+                        android:id="@+id/btn_TopAlbum"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onClickTopAlbum"
+                        android:text="@string/topalbum" />  
+               </TableRow>
+            </TableLayout>
+            
+            <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TableRow>
+
+                    <Button
+                        android:id="@+id/btn_Notadvanced"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onClickNotadvanced"
+                        android:text="@string/notadvanced" />
+
+                    <Button
+                        android:id="@+id/btn_Advanced"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onClickAdvanced"
+                        android:text="@string/advanced" />
+                </TableRow>
+            </TableLayout>            
+            <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TableRow>
+                    <Button
+                        android:id="@+id/btn_Nearby"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onClickNearby"
+                        android:text="@string/nearby"
+                        android:visibility="invisible" />
+
+                    <Button
+                        android:id="@+id/btn_Help"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onClickHelp"
+                        android:text="@string/help" />
+                </TableRow>
+            </TableLayout>
         </LinearLayout>
     </ScrollView>
 

@@ -1,20 +1,20 @@
 package com.jimsuplee.wwozplaylists;
 
 import android.app.ListActivity;
-import android.app.Activity;
+//import android.app.Activity;
 import android.content.Intent;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+//import android.widget.ArrayAdapter;
 import android.net.Uri;
 import android.widget.TextView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.view.View;
-import android.util.Log;
+//import android.util.Log;
 import java.util.HashMap;
 //import android.widget.Toast;
 
@@ -27,7 +27,7 @@ public class Show extends ListActivity {
 		if (Wwozplaylists.showChoice == "") {
 	        displayListView();
 		} else {
-			Log.w(TAG,"In Show.onCreate(), Wwozplaylists.showChoice!=emptyString, setting showChoice to Wwozplaylists.showChoice and calling finish()");
+			//Log.w(TAG,"In Show.onCreate(), Wwozplaylists.showChoice!=emptyString, setting showChoice to Wwozplaylists.showChoice and calling finish()");
 			Intent i = new Intent("");
 			String showChoice = Wwozplaylists.showChoice;
 			i.setData(Uri.parse(showChoice));

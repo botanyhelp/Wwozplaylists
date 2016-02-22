@@ -16,7 +16,7 @@
 
 package com.jimsuplee.wwozplaylists;
 
-import java.util.HashMap;
+//import java.util.HashMap;
 
 import com.jimsuplee.wwozplaylists.DBAdapter;
 

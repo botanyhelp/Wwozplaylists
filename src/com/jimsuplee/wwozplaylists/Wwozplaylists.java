@@ -26,10 +26,10 @@ import com.jimsuplee.wwozplaylists.DBAdapter;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
-import android.os.Bundle;
-import android.app.Activity;
-import android.view.Menu;
-import android.net.Uri;
+//import android.os.Bundle;
+//import android.app.Activity;
+//import android.view.Menu;
+//import android.net.Uri;
 import android.widget.TextView;
 import android.widget.Button;
 import java.io.File;
@@ -41,17 +41,17 @@ import java.io.OutputStream;
 import android.widget.Toast;
 import android.content.Intent;
 import android.database.Cursor;
-import android.text.Html;
+//import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.DatePicker;
-import android.widget.Toast;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import android.widget.ImageView;
-import java.util.HashMap;
-import java.util.Map;
+//import android.widget.DatePicker;
+//import android.widget.Toast;
+//import java.util.Date;
+//import java.text.SimpleDateFormat;
+//import android.widget.ImageView;
+//import java.util.HashMap;
+//import java.util.Map;
 
 public class Wwozplaylists extends Activity {
 	DBAdapter db;
@@ -62,8 +62,10 @@ public class Wwozplaylists extends Activity {
 	static int pagerCounter = 0;
 	static int pagerCounterTotal = 0;
 	static String showChoice = "";
+	static String easyChoice = "";
 	static String titleChoice = "";
 	static String artistChoice = "";
+	static String timeChoice = "";
 	static String albumChoice = "";
 	static String orderBy = "time";
 	static int sqlCount = 0;
@@ -252,65 +254,200 @@ public class Wwozplaylists extends Activity {
 		getMenuInflater().inflate(R.menu.wwozplaylists, menu);
 		return true;
 	}
-
+	
 	public void onClickShow(View view) {
-		//Log.w(TAG, "In Wwozplaylists.onClickShow()");
+		////Log.w(TAG, "In Wwozplaylists.onClickShow()");
 		pagerCounter = 0;
 		pagerCounterTotal = 0;
 		showChoice="";
 		titleChoice="";
 		Intent iShow = new Intent("com.jimsuplee.wwozplaylists.Show");
 		startActivityForResult(iShow, 0);
-	}
-	public void onClickShowTitle(View view) {
-		//Log.w(TAG, "In Wwozplaylists.onClickShow()");
+	}	
+	public void onClickTopTitle(View view) {
+		////Log.w(TAG, "In Wwozplaylists.onClickTopTitle()");
 		pagerCounter = 0;
 		pagerCounterTotal = 0;
 		showChoice="";
-		orderBy="title";
+		titleChoice="";
+		albumChoice="";
+		artistChoice="";
+		Intent iTitle = new Intent("com.jimsuplee.wwozplaylists.Title");
+		startActivityForResult(iTitle, 4);
+	}
+	public void onClickTopArtist(View view) {
+		//Log.w(TAG, "In Wwozplaylists.onClickTopArtist()");
+		pagerCounter = 0;
+		pagerCounterTotal = 0;
+		showChoice="";
+		titleChoice="";
+		albumChoice="";
+		artistChoice="";
+		Intent iArtist = new Intent("com.jimsuplee.wwozplaylists.Artist");
+		startActivityForResult(iArtist, 5);
+	}
+	public void onClickTopAlbum(View view) {
+		////Log.w(TAG, "In Wwozplaylists.onClickTopAlbum()");
+		pagerCounter = 0;
+		pagerCounterTotal = 0;
+		showChoice="";
+		titleChoice="";
+		albumChoice="";
+		artistChoice="";
+		Intent iAlbum = new Intent("com.jimsuplee.wwozplaylists.Album");
+		startActivityForResult(iAlbum, 6);
+	}
+	
+	public void onClickShowTitle(View view) {
+		////Log.w(TAG, "In Wwozplaylists.onClickShow()");
+		pagerCounter = 0;
+		pagerCounterTotal = 0;
+		showChoice="";
+		Wwozplaylists.orderBy="title";
 		Intent iShow = new Intent("com.jimsuplee.wwozplaylists.Show");
 		startActivityForResult(iShow, 0);
 	}
 	public void onClickShowArtist(View view) {
-		//Log.w(TAG, "In Wwozplaylists.onClickShow()");
+		////Log.w(TAG, "In Wwozplaylists.onClickShow()");
 		pagerCounter = 0;
 		pagerCounterTotal = 0;
 		showChoice="";
-		orderBy="artist";
+		Wwozplaylists.orderBy="artist";
 		Intent iShow = new Intent("com.jimsuplee.wwozplaylists.Show");
 		startActivityForResult(iShow, 0);
 	}
 	public void onClickShowAlbum(View view) {
-		Log.w(TAG, "In Wwozplaylists.onClickShow()");
+		//Log.w(TAG, "In Wwozplaylists.onClickShow()");
 		pagerCounter = 0;
 		pagerCounterTotal = 0;
 		showChoice="";
-		orderBy="album";
+		Wwozplaylists.orderBy="album";
 		Intent iShow = new Intent("com.jimsuplee.wwozplaylists.Show");
 		startActivityForResult(iShow, 0);
 	}
 	public void onClickShowMore(View view) {
-		Log.w(TAG, "In Wwozplaylists.onClickShowMore()");
+		//Log.w(TAG, "In Wwozplaylists.onClickShowMore()");
 		if(showChoice!="") {
             Toast.makeText(this, "Getting "+Integer.toString(Wwozplaylists.pagerCounterTotal+1)+" to "+Integer.toString(Wwozplaylists.pagerCounterTotal+100)+" out of "+countMap.get(showChoice), Toast.LENGTH_LONG).show();
             Intent iShow = new Intent("com.jimsuplee.wwozplaylists.Show");
-            startActivityForResult(iShow, 0);
+            startActivityForResult(iShow, 0);		
+        } else if (albumChoice!="") {
+    		onClickAlbum(view);
 		} else if (titleChoice!="" && artistChoice!="") {
 			onClickArtistTitle(view);
 		} else if (titleChoice!="") {
 			onClickTitle(view);
 		} else if (artistChoice!="") {
 			onClickArtist(view);
-		} else if (albumChoice!="") {
-			onClickAlbum(view);
+		} else if (easyChoice!="") {
+			onClickEasy(view);
 		} else {
 			//should never get here:
-			Log.w(TAG, "In Wwozplaylists.onClickShowMore(), but showChoice,titleChoice both ne 0!!! BAD");
+			//Log.w(TAG, "In Wwozplaylists.onClickShowMore(), but showChoice,titleChoice both ne 0!!! BAD");
 		}
 	}
 	
+	
+	public void onClickEasy(View view) {
+		//Log.w(TAG, "In Wwozplaylists.onClickEasy()");
+		pagerCounter = 0;
+		//pagerCounterTotal is NOT set to 0 here because it is sometimes called from onClickShowMore()
+		//pagerCounterTotal = 0;
+		showChoice="";
+		artistChoice="";
+		albumChoice="";
+		//Intent iShow = new Intent("com.jimsuplee.wwozplaylists.Show");
+		//startActivityForResult(iShow, 0);
+		EditText txt_description = (EditText) findViewById(R.id.txt_easy);
+		db.open();
+		String easyParam;
+		if (easyChoice == "") {
+			// txt_description was obtained a few lines above
+			easyParam = txt_description.getText().toString();
+			easyChoice = easyParam;
+			//Log.w(TAG, "In Wwozplaylists.onClickEasy(), easyChoice WAS empty.");
+			//Log.w(TAG, "In Wwozplaylists.onClickEasy(), easyChoice NOW: "	+ easyChoice);
+			pagerCounterTotal = 0;
+		} else {
+			//Log.w(TAG,"In Wwozplaylists.onClickEasy(), easyChoice IS NOT empty.");
+			//Log.w(TAG,"In Wwozplaylists.onClickEasy(), reuse easyChoice: "+ easyChoice);
+			String currentEasyParam = txt_description.getText().toString();
+			// If the user hasn't typed in a different search item:
+			if (easyChoice.equals(currentEasyParam)) {
+				//Log.w(TAG,"In Wwozplaylists.onClickEasy(), same search choice: "+ easyChoice + currentEasyParam);
+				easyParam = easyChoice;
+			} else {
+				// In this case, Ufosightings.titleChoice is not empty.
+				// However, we cannot reuse Ufosightings.titleChoice if
+				// the user has since typed in a different value to search by.
+				// Remember that onClickDescription() is called for new
+				// searches and for "next 10" pager requests. Therefore, this
+				// logic is required. Further, if this is a new search, then
+				// we also want to reset pagerCountTotal to 0.
+				//Log.w(TAG,"In Wwozplaylists.onClickEasy(), NOT same search choice: "+ easyChoice + currentEasyParam);
+
+				easyChoice = currentEasyParam;
+				easyParam = currentEasyParam;
+				pagerCounterTotal = 0;
+			}
+			// pagerCounterTotal = 0;
+			// pagerCounter = 0;
+		}
+		if(easyParam.isEmpty()){
+			Toast.makeText(this, "Enter comma separated search term for fewer results", Toast.LENGTH_LONG).show();
+		}
+		Cursor c = db.getByEasy(easyParam);
+		Toast.makeText(this, Integer.toString(Wwozplaylists.sqlCount)+" total records for Easy = \""+easyChoice+"\". Showing up to 100 records, starting from "+Integer.toString(Wwozplaylists.pagerCounterTotal+1), Toast.LENGTH_LONG).show();
+		String results = "";
+		if (c != null) {
+			//Log.w(TAG,"In Wwozplaylists.onClickEasy(), cursor c is not null.");
+		}
+		//Log.w(TAG,"In Wwozplaylists.onClickEasy(), about to c.moveToFirst()");
+		if (c.moveToFirst()) {
+			//Log.w(TAG,"In Wwozplaylists.onClickEasy(), c.moveToFirst() returned true");
+			do {
+				pagerCounter++;
+				// results += "Occurred: " + c.getString(0) + "\nReported: " +
+				// c.getString(1) + "\nCity/State: " + c.getString(2) +
+				// "\nUfo Shape: " + c.getString(3) + "\nEvent Duration: " +
+				// c.getString(4) + "\nDescription: " + c.getString(5) + "___";
+				results += c.getString(0)+"\n" + c.getString(1) + "\n" + c.getString(2)+ "\n" + c.getString(3) + "___";
+
+			} while (c.moveToNext());
+		}
+		// if(pagerCounter == 10) {
+		// if(pagerCounter > 8) {
+		// for search term 'urgent' 8 results were returned??? actual DB has 27
+		// hmmm??
+		// if(pagerCounter > 7) {
+		if (pagerCounter == 100) {
+			pagerCounterTotal += 100;
+			pagerCounter = 0;
+			//Log.w(TAG,"In Wwozplaylists.onClickEasy(), pagerCounter was ten, now: "+ Integer.toString(pagerCounter));
+			//Log.w(TAG,"In Wwozplaylists.onClickEasy(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
+			//Log.w(TAG,"In Wwozplaylists.onClickEasy(), easyChoice is: "+ easyChoice);
+		} else {
+			// results+=Integer.toString(pagerCounter);
+			//Log.w(TAG,"In Wwozplaylists.onClickEasy(), pagerCounter is NOT ten, it is: "+ Integer.toString(pagerCounter));
+			pagerCounterTotal = 0;
+			pagerCounter = 0;
+			//showChoice = "";
+			//locationType = "";
+			//Log.w(TAG,"In Wwozplaylists.onClickEasy(), pagerCounter is NOT ten: "+ Integer.toString(pagerCounter));
+			//Log.w(TAG,"In Wwozplaylists.onClickEasy(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
+			//Log.w(TAG,"In Wwozplaylists.onClickEasy(), easyChoice is: "+ easyChoice);
+		}
+		//Log.w(TAG, "In Wwozplaylists.onClickEasy(), about to db.close()");
+		Intent iResults = new Intent("com.jimsuplee.wwozplaylists.Results");
+		iResults.putExtra("results", results);
+		startActivityForResult(iResults, 3);
+		db.close();
+	}
+
+	
+	
 	public void onClickTitle(View view) {
-		Log.w(TAG, "In Wwozplaylists.onClickShow()");
+		//Log.w(TAG, "In Wwozplaylists.onClickTitle()");
 		pagerCounter = 0;
 		//pagerCounterTotal is NOT set to 0 here because it is sometimes called from onClickShowMore()
 		//pagerCounterTotal = 0;
@@ -326,16 +463,16 @@ public class Wwozplaylists extends Activity {
 			// txt_description was obtained a few lines above
 			titleParam = txt_description.getText().toString();
 			titleChoice = titleParam;
-			Log.w(TAG, "In Wwozplaylists.onClickTitle(), titleChoice WAS empty.");
-			Log.w(TAG, "In Wwozplaylists.onClickTitle(), titleChoice NOW: "	+ titleChoice);
+			//Log.w(TAG, "In Wwozplaylists.onClickTitle(), titleChoice WAS empty.");
+			//Log.w(TAG, "In Wwozplaylists.onClickTitle(), titleChoice NOW: "	+ titleChoice);
 			pagerCounterTotal = 0;
 		} else {
-			Log.w(TAG,"In Wwozplaylists.onClickTitle(), titleChoice IS NOT empty.");
-			Log.w(TAG,"In Wwozplaylists.onClickTitle(), reuse titleChoice: "+ titleChoice);
+			//Log.w(TAG,"In Wwozplaylists.onClickTitle(), titleChoice IS NOT empty.");
+			//Log.w(TAG,"In Wwozplaylists.onClickTitle(), reuse titleChoice: "+ titleChoice);
 			String currentTitleParam = txt_description.getText().toString();
 			// If the user hasn't typed in a different search item:
 			if (titleChoice.equals(currentTitleParam)) {
-				Log.w(TAG,"In Wwozplaylists.onClickTitle(), same search choice: "+ titleChoice + currentTitleParam);
+				//Log.w(TAG,"In Wwozplaylists.onClickTitle(), same search choice: "+ titleChoice + currentTitleParam);
 				titleParam = titleChoice;
 			} else {
 				// In this case, Ufosightings.titleChoice is not empty.
@@ -345,11 +482,21 @@ public class Wwozplaylists extends Activity {
 				// searches and for "next 10" pager requests. Therefore, this
 				// logic is required. Further, if this is a new search, then
 				// we also want to reset pagerCountTotal to 0.
-				Log.w(TAG,"In Wwozplaylists.onClickTitle(), NOT same search choice: "+ titleChoice + currentTitleParam);
+				//Log.w(TAG,"In Wwozplaylists.onClickTitle(), NOT same search choice: "+ titleChoice + currentTitleParam);
 
-				titleChoice = currentTitleParam;
-				titleParam = currentTitleParam;
-				pagerCounterTotal = 0;
+				//Next three lines work but not with TopTitle
+				//titleChoice = currentTitleParam;
+				//titleParam = currentTitleParam;
+				//pagerCounterTotal = 0;
+				if(currentTitleParam.isEmpty()) {
+					titleParam=titleChoice;
+					//Log.w(TAG,"In Wwozplaylists.onClickTitle(), currentTitleParam.isEmpty()");
+					//Log.w(TAG,"In Wwozplaylists.onClickTitle(), setting titleParam to titleChoice"+titleChoice);
+				} else {
+				    titleChoice = currentTitleParam;
+				    titleParam = currentTitleParam;
+				    pagerCounterTotal = 0;
+				}
 			}
 			// pagerCounterTotal = 0;
 			// pagerCounter = 0;
@@ -358,18 +505,18 @@ public class Wwozplaylists extends Activity {
 		Toast.makeText(this, Integer.toString(Wwozplaylists.sqlCount)+" total records for Title = \""+titleChoice+"\". Showing up to 100 records, starting from "+Integer.toString(Wwozplaylists.pagerCounterTotal+1), Toast.LENGTH_LONG).show();
 		String results = "";
 		if (c != null) {
-			Log.w(TAG,"In Wwozplaylists.onClickTitle(), cursor c is not null.");
+			//Log.w(TAG,"In Wwozplaylists.onClickTitle(), cursor c is not null.");
 		}
-		Log.w(TAG,"In Wwozplaylists.onClickTitle(), about to c.moveToFirst()");
+		//Log.w(TAG,"In Wwozplaylists.onClickTitle(), about to c.moveToFirst()");
 		if (c.moveToFirst()) {
-			Log.w(TAG,"In Wwozplaylists.onClickTitle(), c.moveToFirst() returned true");
+			//Log.w(TAG,"In Wwozplaylists.onClickTitle(), c.moveToFirst() returned true");
 			do {
 				pagerCounter++;
 				// results += "Occurred: " + c.getString(0) + "\nReported: " +
 				// c.getString(1) + "\nCity/State: " + c.getString(2) +
 				// "\nUfo Shape: " + c.getString(3) + "\nEvent Duration: " +
 				// c.getString(4) + "\nDescription: " + c.getString(5) + "___";
-				results += c.getString(0)+"\n" + c.getString(1) + "\n" + c.getString(2)+ "___";
+				results += c.getString(0)+"\n" + c.getString(1) + "\n" + c.getString(2)+ "\n" + c.getString(3) + "___";
 
 			} while (c.moveToNext());
 		}
@@ -381,21 +528,21 @@ public class Wwozplaylists extends Activity {
 		if (pagerCounter == 100) {
 			pagerCounterTotal += 100;
 			pagerCounter = 0;
-			Log.w(TAG,"In Wwozplaylists.onClickTitle(), pagerCounter was ten, now: "+ Integer.toString(pagerCounter));
-			Log.w(TAG,"In Wwozplaylists.onClickTitle(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
-			Log.w(TAG,"In Wwozplaylists.onClickTitle(), titleChoice is: "+ titleChoice);
+			//Log.w(TAG,"In Wwozplaylists.onClickTitle(), pagerCounter was ten, now: "+ Integer.toString(pagerCounter));
+			//Log.w(TAG,"In Wwozplaylists.onClickTitle(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
+			//Log.w(TAG,"In Wwozplaylists.onClickTitle(), titleChoice is: "+ titleChoice);
 		} else {
 			// results+=Integer.toString(pagerCounter);
-			Log.w(TAG,"In Wwozplaylists.onClickTitle(), pagerCounter is NOT ten, it is: "+ Integer.toString(pagerCounter));
+			//Log.w(TAG,"In Wwozplaylists.onClickTitle(), pagerCounter is NOT ten, it is: "+ Integer.toString(pagerCounter));
 			pagerCounterTotal = 0;
 			pagerCounter = 0;
 			//showChoice = "";
 			//locationType = "";
-			Log.w(TAG,"In Wwozplaylists.onClickTitle(), pagerCounter is NOT ten: "+ Integer.toString(pagerCounter));
-			Log.w(TAG,"In Wwozplaylists.onClickTitle(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
-			Log.w(TAG,"In Wwozplaylists.onClickTitle(), titleChoice is: "+ titleChoice);
+			//Log.w(TAG,"In Wwozplaylists.onClickTitle(), pagerCounter is NOT ten: "+ Integer.toString(pagerCounter));
+			//Log.w(TAG,"In Wwozplaylists.onClickTitle(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
+			//Log.w(TAG,"In Wwozplaylists.onClickTitle(), titleChoice is: "+ titleChoice);
 		}
-		Log.w(TAG, "In Wwozplaylists.onClickTitle(), about to db.close()");
+		//Log.w(TAG, "In Wwozplaylists.onClickTitle(), about to db.close()");
 		Intent iResults = new Intent("com.jimsuplee.wwozplaylists.Results");
 		iResults.putExtra("results", results);
 		startActivityForResult(iResults, 3);
@@ -403,30 +550,32 @@ public class Wwozplaylists extends Activity {
 	}
 
 	public void onClickArtist(View view) {
-		Log.w(TAG, "In Wwozplaylists.onClickShow()");
+		//Log.w(TAG, "In Wwozplaylists.onClickArtist()");
 		pagerCounter = 0;
 		//pagerCounterTotal is NOT set to 0 here because it is sometimes called from onClickShowMore()
 		
 		showChoice="";
 		titleChoice="";
 		albumChoice="";
+		//Normally, there is a value here, because the user entered something:
 		EditText txt_artist = (EditText) findViewById(R.id.txt_artist);
+		// ..but if not, then its because they used "Top Artist"
 		db.open();
 		String artistParam;
 		if (artistChoice == "") {
 			// txt_artist was obtained a few lines above
 			artistParam = txt_artist.getText().toString();
 			artistChoice = artistParam;
-			Log.w(TAG, "In Wwozplaylists.onClickArtist(), artistChoice WAS empty.");
-			Log.w(TAG, "In Wwozplaylists.onClickArtist(), artistChoice NOW: "	+ artistChoice);
+			//Log.w(TAG, "In Wwozplaylists.onClickArtist(), artistChoice WAS empty.");
+			//Log.w(TAG, "In Wwozplaylists.onClickArtist(), artistChoice NOW: "	+ artistChoice);
 			pagerCounterTotal = 0;
 		} else {
-			Log.w(TAG,"In Wwozplaylists.onClickArtist(), artistChoice IS NOT empty.");
-			Log.w(TAG,"In Wwozplaylists.onClickArtist(), reuse artistChoice: "+ artistChoice);
+			//Log.w(TAG,"In Wwozplaylists.onClickArtist(), artistChoice IS NOT empty.");
+			//Log.w(TAG,"In Wwozplaylists.onClickArtist(), reuse artistChoice: "+ artistChoice);
 			String currentArtistParam = txt_artist.getText().toString();
 			// If the user hasn't typed in a different search item:
 			if (artistChoice.equals(currentArtistParam)) {
-				Log.w(TAG,"In Wwozplaylists.onClickArtist(), same search choice: "+ artistChoice + currentArtistParam);
+				//Log.w(TAG,"In Wwozplaylists.onClickArtist(), same search choice: "+ artistChoice + currentArtistParam);
 				artistParam = artistChoice;
 			} else {
 				// In this case, Wwozplaylists.artistChoice is not empty.
@@ -436,44 +585,52 @@ public class Wwozplaylists extends Activity {
 				// searches and for "next 10" pager requests. Therefore, this
 				// logic is required. Further, if this is a new search, then
 				// we also want to reset pagerCountTotal to 0.
-				Log.w(TAG,"In Wwozplaylists.onClickArtist(), NOT same search choice: "+ artistChoice + currentArtistParam);
-
-				artistChoice = currentArtistParam;
-				artistParam = currentArtistParam;
-				pagerCounterTotal = 0;
+				//Log.w(TAG,"In Wwozplaylists.onClickArtist(), NOT same search choice: "+ artistChoice + currentArtistParam);
+                //WORKS, but not for TopArtist, next two lines:
+				//artistChoice = currentArtistParam;
+				//artistParam = currentArtistParam;
+				if(currentArtistParam.isEmpty()) {
+					artistParam=artistChoice;
+					//Log.w(TAG,"In Wwozplaylists.onClickArtist(), currentArtistParam.isEmpty()");
+					//Log.w(TAG,"In Wwozplaylists.onClickArtist(), setting artistParam to artistChoice"+artistChoice);
+				} else {
+				    artistChoice = currentArtistParam;
+				    artistParam = currentArtistParam;
+				    pagerCounterTotal = 0;
+				}
 			}
 		}
 		Cursor c = db.getByArtist(artistParam);
 		Toast.makeText(this, Integer.toString(Wwozplaylists.sqlCount)+" total records for Artist = \""+artistChoice+"\". Showing up to 100 records, starting from "+Integer.toString(Wwozplaylists.pagerCounterTotal+1), Toast.LENGTH_LONG).show();
 		String results = "";
 		if (c != null) {
-			Log.w(TAG,"In Wwozplaylists.onClickArtist(), cursor c is not null.");
+			//Log.w(TAG,"In Wwozplaylists.onClickArtist(), cursor c is not null.");
 		}
-		Log.w(TAG,"In Wwozplaylists.onClickArtist(), about to c.moveToFirst()");
+		//Log.w(TAG,"In Wwozplaylists.onClickArtist(), about to c.moveToFirst()");
 		if (c.moveToFirst()) {
-			Log.w(TAG,"In Wwozplaylists.onClickArtist(), c.moveToFirst() returned true");
+			//Log.w(TAG,"In Wwozplaylists.onClickArtist(), c.moveToFirst() returned true");
 			do {
 				pagerCounter++;
-				results += c.getString(0)+"\n" + c.getString(1) + "\n" + c.getString(2)+ "___";
+				results += c.getString(0)+"\n" + c.getString(1) + "\n" + c.getString(2)+ "\n" + c.getString(3) + "___";
 			} while (c.moveToNext());
 		}
 		if (pagerCounter == 100) {
 			pagerCounterTotal += 100;
 			pagerCounter = 0;
-			Log.w(TAG,"In Wwozplaylists.onClickArtist(), pagerCounter was ten, now: "+ Integer.toString(pagerCounter));
-			Log.w(TAG,"In Wwozplaylists.onClickArtist(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
-			Log.w(TAG,"In Wwozplaylists.onClickArtist(), artistChoice is: "+ artistChoice);
+			//Log.w(TAG,"In Wwozplaylists.onClickArtist(), pagerCounter was ten, now: "+ Integer.toString(pagerCounter));
+			//Log.w(TAG,"In Wwozplaylists.onClickArtist(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
+			//Log.w(TAG,"In Wwozplaylists.onClickArtist(), artistChoice is: "+ artistChoice);
 		} else {
-			Log.w(TAG,"In Wwozplaylists.onClickArtist(), pagerCounter is NOT ten, it is: "+ Integer.toString(pagerCounter));
+			//Log.w(TAG,"In Wwozplaylists.onClickArtist(), pagerCounter is NOT ten, it is: "+ Integer.toString(pagerCounter));
 			pagerCounterTotal = 0;
 			pagerCounter = 0;
 			//showChoice = "";
 			//locationType = "";
-			Log.w(TAG,"In Wwozplaylists.onClickArtist(), pagerCounter is NOT ten: "+ Integer.toString(pagerCounter));
-			Log.w(TAG,"In Wwozplaylists.onClickArtist(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
-			Log.w(TAG,"In Wwozplaylists.onClickArtist(), artistChoice is: "+ artistChoice);
+			//Log.w(TAG,"In Wwozplaylists.onClickArtist(), pagerCounter is NOT ten: "+ Integer.toString(pagerCounter));
+			//Log.w(TAG,"In Wwozplaylists.onClickArtist(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
+			//Log.w(TAG,"In Wwozplaylists.onClickArtist(), artistChoice is: "+ artistChoice);
 		}
-		Log.w(TAG, "In Wwozplaylists.onClickArtist(), about to db.close()");
+		//Log.w(TAG, "In Wwozplaylists.onClickArtist(), about to db.close()");
 		Intent iResults = new Intent("com.jimsuplee.wwozplaylists.Results");
 		iResults.putExtra("results", results);
 		startActivityForResult(iResults, 3);
@@ -481,7 +638,7 @@ public class Wwozplaylists extends Activity {
 	}
 
 	public void onClickAlbum(View view) {
-		Log.w(TAG, "In Wwozplaylists.onClickShow()");
+		//Log.w(TAG, "In Wwozplaylists.onClickShow()");
 		pagerCounter = 0;
 		//pagerCounterTotal is NOT set to 0 here because it is sometimes called from onClickShowMore()
 		//pagerCounterTotal = 0;
@@ -497,16 +654,16 @@ public class Wwozplaylists extends Activity {
 			// txt_description was obtained a few lines above
 			albumParam = txt_album.getText().toString();
 			albumChoice = albumParam;
-			Log.w(TAG, "In Wwozplaylists.onClickAlbum(), albumChoice WAS empty.");
-			Log.w(TAG, "In Wwozplaylists.onClickAlbum(), albumChoice NOW: "	+ albumChoice);
+			//Log.w(TAG, "In Wwozplaylists.onClickAlbum(), albumChoice WAS empty.");
+			//Log.w(TAG, "In Wwozplaylists.onClickAlbum(), albumChoice NOW: "	+ albumChoice);
 			pagerCounterTotal = 0;
 		} else {
-			Log.w(TAG,"In Wwozplaylists.onClickAlbum(), albumChoice IS NOT empty.");
-			Log.w(TAG,"In Wwozplaylists.onClickAlbum(), reuse albumChoice: "+ albumChoice);
+			//Log.w(TAG,"In Wwozplaylists.onClickAlbum(), albumChoice IS NOT empty.");
+			//Log.w(TAG,"In Wwozplaylists.onClickAlbum(), reuse albumChoice: "+ albumChoice);
 			String currentAlbumParam = txt_album.getText().toString();
 			// If the user hasn't typed in a different search item:
 			if (albumChoice.equals(currentAlbumParam)) {
-				Log.w(TAG,"In Wwozplaylists.onClickAlbum(), same search choice: "+ albumChoice + currentAlbumParam);
+				//Log.w(TAG,"In Wwozplaylists.onClickAlbum(), same search choice: "+ albumChoice + currentAlbumParam);
 				albumParam = albumChoice;
 			} else {
 				// In this case, Ufosightings.albumChoice is not empty.
@@ -516,11 +673,21 @@ public class Wwozplaylists extends Activity {
 				// searches and for "next 10" pager requests. Therefore, this
 				// logic is required. Further, if this is a new search, then
 				// we also want to reset pagerCountTotal to 0.
-				Log.w(TAG,"In Wwozplaylists.onClickAlbum(), NOT same search choice: "+ albumChoice + currentAlbumParam);
+				//Log.w(TAG,"In Wwozplaylists.onClickAlbum(), NOT same search choice: "+ albumChoice + currentAlbumParam);
 
-				albumChoice = currentAlbumParam;
-				albumParam = currentAlbumParam;
-				pagerCounterTotal = 0;
+				//WORKS, next three lines, but not with TopAlbum
+				//albumChoice = currentAlbumParam;
+				//albumParam = currentAlbumParam;
+				//pagerCounterTotal = 0;
+				if(currentAlbumParam.isEmpty()) {
+					albumParam=albumChoice;
+					//Log.w(TAG,"In Wwozplaylists.onClickAlbum(), currentAlbumParam.isEmpty()");
+					//Log.w(TAG,"In Wwozplaylists.onClickAlbum(), setting albumParam to albumChoice"+albumChoice);
+				} else {
+				    albumChoice = currentAlbumParam;
+				    albumParam = currentAlbumParam;
+				    pagerCounterTotal = 0;
+				}
 			}
 			// pagerCounterTotal = 0;
 			// pagerCounter = 0;
@@ -529,18 +696,18 @@ public class Wwozplaylists extends Activity {
 		Toast.makeText(this, Integer.toString(Wwozplaylists.sqlCount)+" total records for Album = \""+albumChoice+"\". Showing up to 100 records, starting from "+Integer.toString(Wwozplaylists.pagerCounterTotal+1), Toast.LENGTH_LONG).show();
 		String results = "";
 		if (c != null) {
-			Log.w(TAG,"In Wwozplaylists.onClickAlbum(), cursor c is not null.");
+			//Log.w(TAG,"In Wwozplaylists.onClickAlbum(), cursor c is not null.");
 		}
-		Log.w(TAG,"In Wwozplaylists.onClickAlbum(), about to c.moveToFirst()");
+		//Log.w(TAG,"In Wwozplaylists.onClickAlbum(), about to c.moveToFirst()");
 		if (c.moveToFirst()) {
-			Log.w(TAG,"In Wwozplaylists.onClickAlbum(), c.moveToFirst() returned true");
+			//Log.w(TAG,"In Wwozplaylists.onClickAlbum(), c.moveToFirst() returned true");
 			do {
 				pagerCounter++;
 				// results += "Occurred: " + c.getString(0) + "\nReported: " +
 				// c.getString(1) + "\nCity/State: " + c.getString(2) +
 				// "\nUfo Shape: " + c.getString(3) + "\nEvent Duration: " +
 				// c.getString(4) + "\nDescription: " + c.getString(5) + "___";
-				results += c.getString(0)+"\n" + c.getString(1) + "\n" + c.getString(2)+ "___";
+				results += c.getString(0)+"\n" + c.getString(1) + "\n" + c.getString(2)+ "\n" + c.getString(3) + "___";
 
 			} while (c.moveToNext());
 		}
@@ -552,21 +719,21 @@ public class Wwozplaylists extends Activity {
 		if (pagerCounter == 100) {
 			pagerCounterTotal += 100;
 			pagerCounter = 0;
-			Log.w(TAG,"In Wwozplaylists.onClickAlbum(), pagerCounter was ten, now: "+ Integer.toString(pagerCounter));
-			Log.w(TAG,"In Wwozplaylists.onClickAlbum(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
-			Log.w(TAG,"In Wwozplaylists.onClickAlbum(), albumChoice is: "+ albumChoice);
+			//Log.w(TAG,"In Wwozplaylists.onClickAlbum(), pagerCounter was ten, now: "+ Integer.toString(pagerCounter));
+			//Log.w(TAG,"In Wwozplaylists.onClickAlbum(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
+			//Log.w(TAG,"In Wwozplaylists.onClickAlbum(), albumChoice is: "+ albumChoice);
 		} else {
 			// results+=Integer.toString(pagerCounter);
-			Log.w(TAG,"In Wwozplaylists.onClickAlbum(), pagerCounter is NOT ten, it is: "+ Integer.toString(pagerCounter));
+			//Log.w(TAG,"In Wwozplaylists.onClickAlbum(), pagerCounter is NOT ten, it is: "+ Integer.toString(pagerCounter));
 			pagerCounterTotal = 0;
 			pagerCounter = 0;
 			//showChoice = "";
 			//locationType = "";
-			Log.w(TAG,"In Wwozplaylists.onClickAlbum(), pagerCounter is NOT ten: "+ Integer.toString(pagerCounter));
-			Log.w(TAG,"In Wwozplaylists.onClickAlbum(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
-			Log.w(TAG,"In Wwozplaylists.onClickAlbum(), albumChoice is: "+ albumChoice);
+			//Log.w(TAG,"In Wwozplaylists.onClickAlbum(), pagerCounter is NOT ten: "+ Integer.toString(pagerCounter));
+			//Log.w(TAG,"In Wwozplaylists.onClickAlbum(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
+			//Log.w(TAG,"In Wwozplaylists.onClickAlbum(), albumChoice is: "+ albumChoice);
 		}
-		Log.w(TAG, "In Wwozplaylists.onClickAlbum(), about to db.close()");
+		//Log.w(TAG, "In Wwozplaylists.onClickAlbum(), about to db.close()");
 		Intent iResults = new Intent("com.jimsuplee.wwozplaylists.Results");
 		iResults.putExtra("results", results);
 		startActivityForResult(iResults, 3);
@@ -574,7 +741,7 @@ public class Wwozplaylists extends Activity {
 	}
 	
 	public void onClickArtistTitle(View view) {
-		Log.w(TAG, "In Wwozplaylists.onClickArtistTitle()");
+		//Log.w(TAG, "In Wwozplaylists.onClickArtistTitle()");
 		pagerCounter = 0;
 		showChoice="";
 		//titleChoice="";
@@ -590,22 +757,22 @@ public class Wwozplaylists extends Activity {
 			titleParam = txt_artisttitletitle.getText().toString();
 			artistChoice = artistParam;
 			titleChoice = titleParam;
-			Log.w(TAG, "In Wwozplaylists.onClickArtistTitle(), artistChoice WAS empty.");
-			Log.w(TAG, "In Wwozplaylists.onClickArtistTitle(), artistChoice NOW: "	+ artistChoice);
-			Log.w(TAG, "In Wwozplaylists.onClickArtistTitle(), titleChoice WAS empty.");
-			Log.w(TAG, "In Wwozplaylists.onClickArtistTitle(), titleChoice NOW: "	+ titleChoice);
+			//Log.w(TAG, "In Wwozplaylists.onClickArtistTitle(), artistChoice WAS empty.");
+			//Log.w(TAG, "In Wwozplaylists.onClickArtistTitle(), artistChoice NOW: "	+ artistChoice);
+			//Log.w(TAG, "In Wwozplaylists.onClickArtistTitle(), titleChoice WAS empty.");
+			//Log.w(TAG, "In Wwozplaylists.onClickArtistTitle(), titleChoice NOW: "	+ titleChoice);
 			pagerCounterTotal = 0;
 		} else {
-			Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), artistChoice or titleChoice IS NOT empty.");
-			Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), reuse artistChoice: "+ artistChoice);
-			Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), artistChoice or titleChoice IS NOT empty.");
-			Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), reuse titleChoice: "+ titleChoice);
+			//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), artistChoice or titleChoice IS NOT empty.");
+			//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), reuse artistChoice: "+ artistChoice);
+			//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), artistChoice or titleChoice IS NOT empty.");
+			//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), reuse titleChoice: "+ titleChoice);
 			String currentArtistParam = txt_artisttitleartist.getText().toString();
 			String currentTitleParam = txt_artisttitletitle.getText().toString();
 			// If the user hasn't typed in a different search item:
 			if (artistChoice.equals(currentArtistParam) && titleChoice.equals(currentTitleParam)) {
-				Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), same search choice: "+ artistChoice + currentArtistParam);
-				Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), same search choice: "+ titleChoice + currentTitleParam);
+				//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), same search choice: "+ artistChoice + currentArtistParam);
+				//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), same search choice: "+ titleChoice + currentTitleParam);
 				artistParam = artistChoice;
 				titleParam = titleChoice;
 			} else {
@@ -616,8 +783,8 @@ public class Wwozplaylists extends Activity {
 				// searches and for "next 10" pager requests. Therefore, this
 				// logic is required. Further, if this is a new search, then
 				// we also want to reset pagerCountTotal to 0.
-				Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), NOT same search choice artistChoice: "+ artistChoice + " currentArtistParam " + currentArtistParam);
-				Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), NOT same search choice titleChoice: "+ titleChoice + " currentTitleParam " + currentTitleParam);
+				//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), NOT same search choice artistChoice: "+ artistChoice + " currentArtistParam " + currentArtistParam);
+				//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), NOT same search choice titleChoice: "+ titleChoice + " currentTitleParam " + currentTitleParam);
 
 				artistChoice = currentArtistParam;
 				artistParam = currentArtistParam;
@@ -631,43 +798,191 @@ public class Wwozplaylists extends Activity {
 		Toast.makeText(this, Integer.toString(Wwozplaylists.sqlCount)+" total records for Artist = \""+artistChoice+"\", Title = \""+titleChoice+"\". Showing up to 100 records, starting from "+Integer.toString(Wwozplaylists.pagerCounterTotal+1), Toast.LENGTH_LONG).show();
 		String results = "";
 		if (c != null) {
-			Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), cursor c is not null.");
+			//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), cursor c is not null.");
 		}
-		Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), about to c.moveToFirst()");
+		//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), about to c.moveToFirst()");
 		if (c.moveToFirst()) {
-			Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), c.moveToFirst() returned true");
+			//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), c.moveToFirst() returned true");
 			do {
 				pagerCounter++;
-				results += c.getString(0)+"\n" + c.getString(1) + "\n" + c.getString(2)+ "___";
+				results += c.getString(0)+"\n" + c.getString(1) + "\n" + c.getString(2)+ "\n" + c.getString(3) + "___";
 			} while (c.moveToNext());
 		}
 		if (pagerCounter == 100) {
 			pagerCounterTotal += 100;
 			pagerCounter = 0;
-			Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), pagerCounter was ten, now: "+ Integer.toString(pagerCounter));
-			Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
-			Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), artistChoice is: "+ artistChoice);
-			Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), titleChoice is: "+ titleChoice);
+			//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), pagerCounter was ten, now: "+ Integer.toString(pagerCounter));
+			//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
+			//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), artistChoice is: "+ artistChoice);
+			//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), titleChoice is: "+ titleChoice);
 		} else {
-			Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), pagerCounter is NOT ten, it is: "+ Integer.toString(pagerCounter));
+			//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), pagerCounter is NOT ten, it is: "+ Integer.toString(pagerCounter));
 			pagerCounterTotal = 0;
 			pagerCounter = 0;
 			//showChoice = "";
 			//locationType = "";
-			Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), pagerCounter is NOT ten: "+ Integer.toString(pagerCounter));
-			Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
-			Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), artistChoice is: "+ artistChoice);
-			Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), titleChoice is: "+ titleChoice);
+			//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), pagerCounter is NOT ten: "+ Integer.toString(pagerCounter));
+			//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
+			//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), artistChoice is: "+ artistChoice);
+			//Log.w(TAG,"In Wwozplaylists.onClickArtistTitle(), titleChoice is: "+ titleChoice);
 		}
-		Log.w(TAG, "In Wwozplaylists.onClickArtistTitle(), about to db.close()");
+		//Log.w(TAG, "In Wwozplaylists.onClickArtistTitle(), about to db.close()");
 		Intent iResults = new Intent("com.jimsuplee.wwozplaylists.Results");
 		iResults.putExtra("results", results);
 		startActivityForResult(iResults, 3);
 		db.close();
 	}
 	
+	public void onClickAdvanced(View view) {
+		//Log.w(TAG, "In Wwozplaylists.onClickAdvanced()");
+		pagerCounter = 0;
+		pagerCounterTotal = 0;
+		//Turn off the pager button, no matter what when clicking on Help button
+		Button pagerButton = (Button) findViewById(R.id.btn_ShowPager);
+	    pagerButton.setVisibility(View.INVISIBLE);
+		showChoice="";
+		titleChoice="";
+		artistChoice="";
+		albumChoice="";
+		//Toast.makeText(this, "WWOZ is the greatest radio station in the world. To donate, call 1 877 907 6999.", Toast.LENGTH_LONG).show();
+		//TextView tvshow = (TextView) findViewById(R.id.txt_Songdata);
+		//tvshow.setVisibility(View.INVISIBLE);
+		//TextView tv = (TextView) findViewById(R.id.txt_Songsearch);
+	    //tv.setVisibility(View.VISIBLE);
+	    //tv.setText(R.string.helptext);
+		TextView txt_Songdata = (TextView) findViewById(R.id.txt_Songdata);
+		txt_Songdata.setVisibility(View.VISIBLE);
+		TextView txt_Songsearch = (TextView) findViewById(R.id.txt_Songsearch);
+		txt_Songsearch.setVisibility(View.VISIBLE);
+		//Button btn_ShowPager = (Button) findViewById(R.id.btn_ShowPager);
+		//btn_ShowPager.setVisibility(View.VISIBLE);
+		EditText txt_title = (EditText) findViewById(R.id.txt_title);
+		txt_title.setVisibility(View.VISIBLE);
+		Button btn_Title = (Button) findViewById(R.id.btn_Title);
+		btn_Title.setVisibility(View.VISIBLE);
+		EditText txt_artist = (EditText) findViewById(R.id.txt_artist);
+		txt_artist.setVisibility(View.VISIBLE);
+		Button btn_Artist = (Button) findViewById(R.id.btn_Artist);
+		btn_Artist.setVisibility(View.VISIBLE);
+		EditText txt_album = (EditText) findViewById(R.id.txt_album);
+		txt_album.setVisibility(View.VISIBLE);
+		Button btn_Album = (Button) findViewById(R.id.btn_Album);
+		btn_Album.setVisibility(View.VISIBLE);
+		EditText txt_artisttitleartist = (EditText) findViewById(R.id.txt_artisttitleartist);
+		txt_artisttitleartist.setVisibility(View.VISIBLE);
+		EditText txt_artisttitletitle = (EditText) findViewById(R.id.txt_artisttitletitle);
+		txt_artisttitletitle.setVisibility(View.VISIBLE);
+		Button btn_ArtistTitle = (Button) findViewById(R.id.btn_ArtistTitle);
+		btn_ArtistTitle.setVisibility(View.VISIBLE);
+		TextView tv_shows = (TextView) findViewById(R.id.tv_shows);
+		tv_shows.setVisibility(View.VISIBLE);
+		
+		TextView tv_top = (TextView) findViewById(R.id.tv_top);
+		tv_top.setVisibility(View.VISIBLE);
+		TextView tv_artist = (TextView) findViewById(R.id.tv_artist);
+		tv_artist.setVisibility(View.VISIBLE);
+		TextView tv_title = (TextView) findViewById(R.id.tv_title);
+		tv_title.setVisibility(View.VISIBLE);
+		TextView tv_album = (TextView) findViewById(R.id.tv_album);
+		tv_album.setVisibility(View.VISIBLE);
+		TextView tv_artisttitle = (TextView) findViewById(R.id.tv_artisttitle);
+		tv_artisttitle.setVisibility(View.VISIBLE);
+		
+		Button btn_Show = (Button) findViewById(R.id.btn_Show);
+		btn_Show.setVisibility(View.VISIBLE);
+		Button btn_Showtitle = (Button) findViewById(R.id.btn_Showtitle);
+		btn_Showtitle.setVisibility(View.VISIBLE);
+		Button btn_Showartist = (Button) findViewById(R.id.btn_Showartist);
+		btn_Showartist.setVisibility(View.VISIBLE);
+		Button btn_Showalbum = (Button) findViewById(R.id.btn_Showalbum);
+		btn_Showalbum.setVisibility(View.VISIBLE);
+		Button btn_Advanced = (Button) findViewById(R.id.btn_Advanced);
+		btn_Advanced.setVisibility(View.VISIBLE);
+		Button btn_Help = (Button) findViewById(R.id.btn_Help);
+		btn_Help.setVisibility(View.VISIBLE);
+		txt_Songsearch.setText(R.string.helptext);
+		EditText txt_easy = (EditText) findViewById(R.id.txt_easy);
+		txt_easy.setVisibility(View.INVISIBLE);
+		Button btn_Easy = (Button) findViewById(R.id.btn_Easy);
+		btn_Easy.setVisibility(View.INVISIBLE);
+	}
+	
+	public void onClickNotadvanced(View view) {
+		//Log.w(TAG, "In Wwozplaylists.onClickAdvanced()");
+		pagerCounter = 0;
+		pagerCounterTotal = 0;
+		//Turn off the pager button, no matter what when clicking on Help button
+		Button pagerButton = (Button) findViewById(R.id.btn_ShowPager);
+	    pagerButton.setVisibility(View.INVISIBLE);
+		showChoice="";
+		titleChoice="";
+		artistChoice="";
+		albumChoice="";
+		//Toast.makeText(this, "WWOZ is the greatest radio station in the world. To donate, call 1 877 907 6999.", Toast.LENGTH_LONG).show();
+		//TextView tvshow = (TextView) findViewById(R.id.txt_Songdata);
+		//tvshow.setVisibility(View.INVISIBLE);
+		//TextView tv = (TextView) findViewById(R.id.txt_Songsearch);
+	    //tv.setVisibility(View.VISIBLE);
+	    //tv.setText(R.string.helptext);
+		TextView txt_Songdata = (TextView) findViewById(R.id.txt_Songdata);
+		txt_Songdata.setVisibility(View.VISIBLE);
+		TextView txt_Songsearch = (TextView) findViewById(R.id.txt_Songsearch);
+		txt_Songsearch.setVisibility(View.VISIBLE);
+		//Button btn_ShowPager = (Button) findViewById(R.id.btn_ShowPager);
+		//btn_ShowPager.setVisibility(View.VISIBLE);
+		EditText txt_title = (EditText) findViewById(R.id.txt_title);
+		txt_title.setVisibility(View.INVISIBLE);
+		Button btn_Title = (Button) findViewById(R.id.btn_Title);
+		btn_Title.setVisibility(View.INVISIBLE);
+		EditText txt_artist = (EditText) findViewById(R.id.txt_artist);
+		txt_artist.setVisibility(View.INVISIBLE);
+		Button btn_Artist = (Button) findViewById(R.id.btn_Artist);
+		btn_Artist.setVisibility(View.INVISIBLE);
+		EditText txt_album = (EditText) findViewById(R.id.txt_album);
+		txt_album.setVisibility(View.INVISIBLE);
+		Button btn_Album = (Button) findViewById(R.id.btn_Album);
+		btn_Album.setVisibility(View.INVISIBLE);
+		EditText txt_artisttitleartist = (EditText) findViewById(R.id.txt_artisttitleartist);
+		txt_artisttitleartist.setVisibility(View.INVISIBLE);
+		EditText txt_artisttitletitle = (EditText) findViewById(R.id.txt_artisttitletitle);
+		txt_artisttitletitle.setVisibility(View.INVISIBLE);
+		Button btn_ArtistTitle = (Button) findViewById(R.id.btn_ArtistTitle);
+		btn_ArtistTitle.setVisibility(View.INVISIBLE);
+		TextView tv_shows = (TextView) findViewById(R.id.tv_shows);
+		tv_shows.setVisibility(View.INVISIBLE);
+		
+		//TextView tv_top = (TextView) findViewById(R.id.tv_top);
+		//tv_top.setVisibility(View.INVISIBLE);
+		TextView tv_artist = (TextView) findViewById(R.id.tv_artist);
+		tv_artist.setVisibility(View.INVISIBLE);
+		TextView tv_title = (TextView) findViewById(R.id.tv_title);
+		tv_title.setVisibility(View.INVISIBLE);
+		TextView tv_album = (TextView) findViewById(R.id.tv_album);
+		tv_album.setVisibility(View.INVISIBLE);
+		TextView tv_artisttitle = (TextView) findViewById(R.id.tv_artisttitle);
+		tv_artisttitle.setVisibility(View.INVISIBLE);
+		
+		Button btn_Show = (Button) findViewById(R.id.btn_Show);
+		btn_Show.setVisibility(View.INVISIBLE);
+		Button btn_Showtitle = (Button) findViewById(R.id.btn_Showtitle);
+		btn_Showtitle.setVisibility(View.INVISIBLE);
+		Button btn_Showartist = (Button) findViewById(R.id.btn_Showartist);
+		btn_Showartist.setVisibility(View.INVISIBLE);
+		Button btn_Showalbum = (Button) findViewById(R.id.btn_Showalbum);
+		btn_Showalbum.setVisibility(View.INVISIBLE);
+		Button btn_Advanced = (Button) findViewById(R.id.btn_Advanced);
+		btn_Advanced.setVisibility(View.VISIBLE);
+		Button btn_Help = (Button) findViewById(R.id.btn_Help);
+		btn_Help.setVisibility(View.VISIBLE);
+		txt_Songsearch.setText(R.string.helptext);
+		EditText txt_easy = (EditText) findViewById(R.id.txt_easy);
+		txt_easy.setVisibility(View.VISIBLE);
+		Button btn_Easy = (Button) findViewById(R.id.btn_Easy);
+		btn_Easy.setVisibility(View.VISIBLE);
+	}
+	
 	public void onClickHelp(View view) {
-		Log.w(TAG, "In Wwozplaylists.onClickHelp()");
+		//Log.w(TAG, "In Wwozplaylists.onClickHelp()");
 		pagerCounter = 0;
 		pagerCounterTotal = 0;
 		//Turn off the pager button, no matter what when clicking on Help button
@@ -684,13 +999,69 @@ public class Wwozplaylists extends Activity {
 	    tv.setVisibility(View.VISIBLE);
 	    tv.setText(R.string.helptext);
 	}
-
+	
+	public void onClickNearby(View view) {
+		//onClickNearby uses the value in Wwozplaylists.timeChoice to find songs that were 
+		// played at about the same time as the song that was chosen.  That value for 
+		// Wwozplaylists.timeChoice is set in Results.java after the user clicks on a song
+		// that value was obtained from the time column in the database
+		//Log.w(TAG, "In Wwozplaylists.onClickNearby()");
+		Toast.makeText(this, "Finding songs played during that same hour.", Toast.LENGTH_LONG).show();
+		pagerCounter = 0;
+		pagerCounterTotal = 0;
+		//Turn off the pager button, no matter what when clicking on Help button
+		Button pagerButton = (Button) findViewById(R.id.btn_ShowPager);
+	    pagerButton.setVisibility(View.INVISIBLE);
+		showChoice="";
+		titleChoice="";
+		artistChoice="";
+		albumChoice="";
+		db.open();
+		//timeChoice="";
+		Cursor c = db.getByNearby();		
+		if (c != null) {
+			//Log.w(TAG,"In Wwozplaylists.onClickNearby(), cursor c is not null.");
+		}
+		//Log.w(TAG,"In Wwozplaylists.onClickNearby(), about to c.moveToFirst()");
+		String results = "";
+		if (c.moveToFirst()) {
+			//Log.w(TAG,"In Wwozplaylists.onClickNearby(), c.moveToFirst() returned true");
+			do {
+				pagerCounter++;
+				results += c.getString(0)+"\n" + c.getString(1) + "\n" + c.getString(2)+ "\n" + c.getString(3) + "___";
+			} while (c.moveToNext());
+		}		
+		if (pagerCounter == 100) {
+			pagerCounterTotal += 100;
+			pagerCounter = 0;
+			//Log.w(TAG,"In Wwozplaylists.onClickNearby(), pagerCounter was ten, now: "+ Integer.toString(pagerCounter));
+			//Log.w(TAG,"In Wwozplaylists.onClickNearby(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
+			//Log.w(TAG,"In Wwozplaylists.onClickNearby(), artistChoice is: "+ artistChoice);
+			//Log.w(TAG,"In Wwozplaylists.onClickNearby(), titleChoice is: "+ titleChoice);
+		} else {
+			//Log.w(TAG,"In Wwozplaylists.onClickNearby(), pagerCounter is NOT ten, it is: "+ Integer.toString(pagerCounter));
+			pagerCounterTotal = 0;
+			pagerCounter = 0;
+			//showChoice = "";
+			//locationType = "";
+			//Log.w(TAG,"In Wwozplaylists.onClickNearby(), pagerCounter is NOT ten: "+ Integer.toString(pagerCounter));
+			//Log.w(TAG,"In Wwozplaylists.onClickNearby(), pagerCounterTotal is: "+ Integer.toString(pagerCounterTotal));
+			//Log.w(TAG,"In Wwozplaylists.onClickNearby(), artistChoice is: "+ artistChoice);
+			//Log.w(TAG,"In Wwozplaylists.onClickNearby(), titleChoice is: "+ titleChoice);
+		}
+		//Log.w(TAG, "In Wwozplaylists.onClickNearby(), about to db.close()");
+		Intent iResults = new Intent("com.jimsuplee.wwozplaylists.Results");
+		iResults.putExtra("results", results);
+		startActivityForResult(iResults, 3);
+		db.close();
+	}
+	
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// ---check if the request code is 0 1 2 3 4 5---
-		//Log.w(TAG, "In Wwozplaylists.onActivityResult(), checking reqCod");
+		////Log.w(TAG, "In Wwozplaylists.onActivityResult(), checking reqCod");
 		// onClickShow startActivityForResult section
 		if (requestCode == 0) {
-			//Log.w(TAG, "In Wwozplaylists.onActivityResult(int-reqCode=0,int-resCode,Intent-data)");
+			////Log.w(TAG, "In Wwozplaylists.onActivityResult(int-reqCode=0,int-resCode,Intent-data)");
 			if (resultCode == RESULT_OK) {
 				Toast.makeText(this, showMap.get(showChoice), Toast.LENGTH_LONG).show();
 				db.open();
@@ -698,21 +1069,21 @@ public class Wwozplaylists extends Activity {
 				Cursor c = db.getByShow(show);
 				String results = "";
 				if (c != null) {
-					Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor is not null");
+					//Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor is not null");
 				}
 				int counterResults = 0;
 				if (c.moveToFirst()) {
-					Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor.moveToFirst() is true, about to loop through results");
+					//Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor.moveToFirst() is true, about to loop through results");
 					do {
 						pagerCounter++;
 						counterResults++;						
 						//results += "Affected: " + getString(0) + "Cost: " + getString(1) + "Country: " + getString(2) + "End: " + getString(3) + "Id: " + getString(4) + "Killed: " + getString(5) + "Show: " + getString(6) + "Name: " + getString(7) + "Start: " + getString(8) + "Sub_Type: " + getString(9) + "Type: " + getString(10)
 			 		    //results += "\nStartyear: " + c.getString(9) +"\nType: " + c.getString(11) + "\nSub_Type: " + c.getString(10) + "\nCountry: " + c.getString(2) +"\nShow: " + c.getString(6) +"\nKilled: " + c.getString(5) +"\nAffected: " + c.getString(0) + "\nCost: " + c.getString(1) +"\nStart: " + c.getString(9) + c.getString(8) + "\nEnd: " + c.getString(3) + "\nName: " + c.getString(7) +"\nId: " + c.getString(4) + "___";
-						results += c.getString(0)+"\n" + c.getString(1) + "\n" + c.getString(2)+ "___";
+						results += c.getString(0)+"\n" + c.getString(1) + "\n" + c.getString(2)+ "\n" + c.getString(3) + "___";
 					} while (c.moveToNext());
-					Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor.moveToFirst(), finished loop with " + Integer.toString(counterResults));
+					//Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor.moveToFirst(), finished loop with " + Integer.toString(counterResults));
 				} else {
-					Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor.moveToFirst() is NOT TRUE!");
+					//Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor.moveToFirst() is NOT TRUE!");
 				}
 
 				if (pagerCounter == 100) {
@@ -728,16 +1099,16 @@ public class Wwozplaylists extends Activity {
 				}
 				Intent iResults = new Intent("com.jimsuplee.wwozplaylists.Results");
 				iResults.putExtra("results", results);
-				Log.w(TAG, "In Wwozplaylists.onActivityResult(), about to startActivityForResult(iResults, 3)");
+				//Log.w(TAG, "In Wwozplaylists.onActivityResult(), about to startActivityForResult(iResults, 3)");
 				startActivityForResult(iResults, 3);
-				Log.w(TAG, "In Wwozplaylists.onActivityResult(), iResults started, about to db.close()");
+				//Log.w(TAG, "In Wwozplaylists.onActivityResult(), iResults started, about to db.close()");
 				db.close();
 			}
 		}
 		if (requestCode == 3) {
-			//Log.w(TAG, "In Wwozplaylists.onActivityResult(int-reqCode=3,int-resCode,Intent-data)");
+			////Log.w(TAG, "In Wwozplaylists.onActivityResult(int-reqCode=3,int-resCode,Intent-data)");
 			if (resultCode == RESULT_OK) {
-				Log.w(TAG, "In Wwozplaylists.onActivityResult(3) RESULT_OK, about to set TextView");
+				//Log.w(TAG, "In Wwozplaylists.onActivityResult(3) RESULT_OK, about to set TextView");
 				//String songData = Html.fromHtml(data.getData().toString()).toString();
 				// The next if/else lines decide whether there are more (than
 				// the last 10) records
@@ -777,20 +1148,158 @@ public class Wwozplaylists extends Activity {
 				TextView tv = (TextView) findViewById(R.id.txt_Songsearch);
 				tv.setVisibility(View.VISIBLE);
 				tv.setText(songData);
+				
+				Button btn_Nearby = (Button) findViewById(R.id.btn_Nearby);
+				btn_Nearby.setVisibility(View.VISIBLE);
 				//ImageView iv = (ImageView) findViewById(R.id.imagedetail);
             	//if(photoMap.get(Wwozplaylists.country) != null) {
-            		//Log.w(TAG, "In Wwozplaylists.onActivityResult(3) photoMap ok, about to set ImageView to"+Wwozplaylists.country);
+            		////Log.w(TAG, "In Wwozplaylists.onActivityResult(3) photoMap ok, about to set ImageView to"+Wwozplaylists.country);
             	    //iv.setImageResource(photoMap.get(Wwozplaylists.country));
             		//iv.setImageResource(photoMap.get(country));
             	    //iv.setVisibility(View.VISIBLE);
             	//} else {
-            		//Log.w(TAG, "In Wwozplaylists.onActivityResult(3) photoMap empty, about to set ImageView to"+Wwozplaylists.country);
+            		////Log.w(TAG, "In Wwozplaylists.onActivityResult(3) photoMap empty, about to set ImageView to"+Wwozplaylists.country);
             	    //iv.setImageResource(photoMap.get(Wwozplaylists.country));
             		//iv.setImageResource(R.drawable.disasters);
             	    //iv.setVisibility(View.VISIBLE);
             	//}
 			}
-		}		
+		}
+		if (requestCode == 4) {
+			////Log.w(TAG, "In Wwozplaylists.onActivityResult(int-reqCode=4,int-resCode,Intent-data)");
+			if (resultCode == RESULT_OK) {
+				//Toast.makeText(this, showMap.get(showChoice), Toast.LENGTH_LONG).show();
+				db.open();
+				String title = data.getData().toString();	
+				Cursor c = db.getByTitle(title);
+				String results = "";
+				if (c != null) {
+					//Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor is not null");
+				}
+				int counterResults = 0;
+				if (c.moveToFirst()) {
+					//Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor.moveToFirst() is true, about to loop through results");
+					do {
+						pagerCounter++;
+						counterResults++;						
+						//results += "Affected: " + getString(0) + "Cost: " + getString(1) + "Country: " + getString(2) + "End: " + getString(3) + "Id: " + getString(4) + "Killed: " + getString(5) + "Show: " + getString(6) + "Name: " + getString(7) + "Start: " + getString(8) + "Sub_Type: " + getString(9) + "Type: " + getString(10)
+			 		    //results += "\nStartyear: " + c.getString(9) +"\nType: " + c.getString(11) + "\nSub_Type: " + c.getString(10) + "\nCountry: " + c.getString(2) +"\nShow: " + c.getString(6) +"\nKilled: " + c.getString(5) +"\nAffected: " + c.getString(0) + "\nCost: " + c.getString(1) +"\nStart: " + c.getString(9) + c.getString(8) + "\nEnd: " + c.getString(3) + "\nName: " + c.getString(7) +"\nId: " + c.getString(4) + "___";
+						results += c.getString(0)+"\n" + c.getString(1) + "\n" + c.getString(2)+ "\n" + c.getString(3) + "___";
+					} while (c.moveToNext());
+					//Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor.moveToFirst(), finished loop with " + Integer.toString(counterResults));
+				} else {
+					//Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor.moveToFirst() is NOT TRUE!");
+				}
+
+				if (pagerCounter == 100) {
+					pagerCounterTotal += 100;
+					pagerCounter = 0;
+					//showType = "showCity";
+				} else {
+					//results+=Integer.toString(pagerCounter);
+					pagerCounterTotal = 0;
+					pagerCounter = 0;
+					showChoice = "";
+					//showType = "";
+				}
+				Intent iResults = new Intent("com.jimsuplee.wwozplaylists.Results");
+				iResults.putExtra("results", results);
+				//Log.w(TAG, "In Wwozplaylists.onActivityResult(), about to startActivityForResult(iResults, 3)");
+				startActivityForResult(iResults, 3);
+				//Log.w(TAG, "In Wwozplaylists.onActivityResult(), iResults started, about to db.close()");
+				db.close();
+			}
+		}
+		if (requestCode == 5) {
+			////Log.w(TAG, "In Wwozplaylists.onActivityResult(int-reqCode=5,int-resCode,Intent-data)");
+			if (resultCode == RESULT_OK) {
+				//Toast.makeText(this, showMap.get(showChoice), Toast.LENGTH_LONG).show();
+				db.open();
+				String artist = data.getData().toString();	
+				Cursor c = db.getByArtist(artist);
+				String results = "";
+				if (c != null) {
+					//Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor is not null");
+				}
+				int counterResults = 0;
+				if (c.moveToFirst()) {
+					//Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor.moveToFirst() is true, about to loop through results");
+					do {
+						pagerCounter++;
+						counterResults++;						
+						//results += "Affected: " + getString(0) + "Cost: " + getString(1) + "Country: " + getString(2) + "End: " + getString(3) + "Id: " + getString(4) + "Killed: " + getString(5) + "Show: " + getString(6) + "Name: " + getString(7) + "Start: " + getString(8) + "Sub_Type: " + getString(9) + "Type: " + getString(10)
+			 		    //results += "\nStartyear: " + c.getString(9) +"\nType: " + c.getString(11) + "\nSub_Type: " + c.getString(10) + "\nCountry: " + c.getString(2) +"\nShow: " + c.getString(6) +"\nKilled: " + c.getString(5) +"\nAffected: " + c.getString(0) + "\nCost: " + c.getString(1) +"\nStart: " + c.getString(9) + c.getString(8) + "\nEnd: " + c.getString(3) + "\nName: " + c.getString(7) +"\nId: " + c.getString(4) + "___";
+						results += c.getString(0)+"\n" + c.getString(1) + "\n" + c.getString(2)+ "\n" + c.getString(3) + "___";
+					} while (c.moveToNext());
+					//Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor.moveToFirst(), finished loop with " + Integer.toString(counterResults));
+				} else {
+					//Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor.moveToFirst() is NOT TRUE!");
+				}
+
+				if (pagerCounter == 100) {
+					pagerCounterTotal += 100;
+					pagerCounter = 0;
+					//showType = "showCity";
+				} else {
+					//results+=Integer.toString(pagerCounter);
+					pagerCounterTotal = 0;
+					pagerCounter = 0;
+					showChoice = "";
+					//showType = "";
+				}
+				Intent iResults = new Intent("com.jimsuplee.wwozplaylists.Results");
+				iResults.putExtra("results", results);
+				//Log.w(TAG, "In Wwozplaylists.onActivityResult(), about to startActivityForResult(iResults, 3)");
+				startActivityForResult(iResults, 3);
+				//Log.w(TAG, "In Wwozplaylists.onActivityResult(), iResults started, about to db.close()");
+				db.close();
+			}
+		}
+		if (requestCode == 6) {
+			////Log.w(TAG, "In Wwozplaylists.onActivityResult(int-reqCode=6,int-resCode,Intent-data)");
+			if (resultCode == RESULT_OK) {
+				//Toast.makeText(this, showMap.get(showChoice), Toast.LENGTH_LONG).show();
+				db.open();
+				String album = data.getData().toString();	
+				Cursor c = db.getByAlbum(album);
+				String results = "";
+				if (c != null) {
+					//Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor is not null");
+				}
+				int counterResults = 0;
+				if (c.moveToFirst()) {
+					//Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor.moveToFirst() is true, about to loop through results");
+					do {
+						pagerCounter++;
+						counterResults++;						
+						//results += "Affected: " + getString(0) + "Cost: " + getString(1) + "Country: " + getString(2) + "End: " + getString(3) + "Id: " + getString(4) + "Killed: " + getString(5) + "Show: " + getString(6) + "Name: " + getString(7) + "Start: " + getString(8) + "Sub_Type: " + getString(9) + "Type: " + getString(10)
+			 		    //results += "\nStartyear: " + c.getString(9) +"\nType: " + c.getString(11) + "\nSub_Type: " + c.getString(10) + "\nCountry: " + c.getString(2) +"\nShow: " + c.getString(6) +"\nKilled: " + c.getString(5) +"\nAffected: " + c.getString(0) + "\nCost: " + c.getString(1) +"\nStart: " + c.getString(9) + c.getString(8) + "\nEnd: " + c.getString(3) + "\nName: " + c.getString(7) +"\nId: " + c.getString(4) + "___";
+						results += c.getString(0)+"\n" + c.getString(1) + "\n" + c.getString(2)+ "\n" + c.getString(3) + "___";
+					} while (c.moveToNext());
+					//Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor.moveToFirst(), finished loop with " + Integer.toString(counterResults));
+				} else {
+					//Log.w(TAG, "In Wwozplaylists.onActivityResult(), cursor.moveToFirst() is NOT TRUE!");
+				}
+
+				if (pagerCounter == 100) {
+					pagerCounterTotal += 100;
+					pagerCounter = 0;
+					//showType = "showCity";
+				} else {
+					//results+=Integer.toString(pagerCounter);
+					pagerCounterTotal = 0;
+					pagerCounter = 0;
+					showChoice = "";
+					//showType = "";
+				}
+				Intent iResults = new Intent("com.jimsuplee.wwozplaylists.Results");
+				iResults.putExtra("results", results);
+				//Log.w(TAG, "In Wwozplaylists.onActivityResult(), about to startActivityForResult(iResults, 3)");
+				startActivityForResult(iResults, 3);
+				//Log.w(TAG, "In Wwozplaylists.onActivityResult(), iResults started, about to db.close()");
+				db.close();
+			}
+		}
 	}		
 }
 
