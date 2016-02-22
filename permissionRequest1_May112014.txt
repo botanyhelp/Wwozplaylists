@@ -1,0 +1,10 @@
+Dear Mr. Landesman (and other WWOZers),
+
+I love WWOZ and learn alot about music and artists there.  Sunday morning jazz is the surest bet in my headphone.  Several months ago, I constructed an android application that does much of what the Playlists page does on your website.  It lets you find out what's been playing.  This app, Wwozplaylists, never connects to the Internet and so the data is old, circa 2010-2013, and gets older.  Because it doesn't connect to the web, it never gets updated (unless I change/recode the app and update it).  Even so, its alot of data and its there on your phone to play with.  As its only user, I can tell you that its alot of fun.  Its not available anywhere, yet, because that playlist data is entered by your staff and belongs to you.  Not me.  All of the apps I've made available will always be free.  They all run on almost every android phone.  None of them ever connect to the Internet.  I haven't touched the code in several months.  I get busy. I wanted to make some improvements but I get busy.  You can see the app in action here: www.youtube.com/watch?v=ZUJ9HGUVyxE    You'll notice there that I reused a copyright statement in the app that I got from your website.  You'll also notice that it doesn't have a logo/icon yet.  I've already run afoul with your data!  I could reuse the logo I find on the website.  Or, if you send a 512x512 pixels PNG as an email attachment, I will use that.  
+
+I'd like to upload this app to the Google Play store so that others can enjoy it. Like I say, it would always be free and requires no permissions from the phone.  As months go by, I'm afraid it will sit there forever and get lost.  I'd rather share it. 
+
+If you have no objection, I will load it up to Google Play.  I believe that its a good app, worthy of the listeners of the best radio station in the world!
+
+Thanks,
+Tom
